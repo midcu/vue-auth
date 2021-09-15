@@ -1,0 +1,97 @@
+/** 顶部栏的颜色主题 */
+.va-main-header {
+    background-color: #090723;
+    color: rgba(255,255,255,.5);
+    font-size: 12px;
+    border-bottom: 1px solid #090723;
+    position: relative;
+}
+
+.va-main-header:before {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    right: 90px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    color: rgba(255,255,255,.5);
+    background: rgba(22, 12, 43, 0.95);
+}
+.va-main-header:after {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    right: 230px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: rgba(255,255,255,.5);
+    background: rgba(8, 14, 47, 0.95);
+}
+
+.va-main-header-name {
+    color: rgba(255,255,255,.5);
+}
+
+/** 侧边栏的颜色主题 */
+.va-main-aside {
+    background-color: #090723;
+    background-image: linear-gradient(#090723, #090723);
+}
+
+.va-main-aside .el-submenu__title i,
+.va-main-aside .el-menu-item i {
+    color: rgba(255,255,255,.5);
+}
+
+.va-main-aside .el-menu-item.is-active i {
+    color: #ffffff !important;
+}
+
+.va-main-aside .el-menu-item.is-active {
+    color: #ffffff !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.va-main-aside .el-menu-item, 
+.va-main-aside .el-submenu__title {
+    color: rgba(255,255,255,.5) !important;
+    background-color: transparent !important;
+}
+
+.va-main-aside .el-menu-item:focus, 
+.va-main-aside .el-menu-item:hover, 
+.va-main-aside .el-submenu__title:focus, 
+.va-main-aside .el-submenu__title:hover {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 表格主题 */
+.va-table-thead-theme {
+    background: #eef1f6 !important;
+    background-color:#eef1f6 !important;
+    color:#666666 !important;
+    border-top: 1px solid #eef1f6 !important;
+}
+.va-table-thead-theme thead th, .demo-table-thead thead tr{
+    background: #eef1f6 !important;
+    background-color:#eef1f6 !important;
+    color:#666666 !important;
+    border-top: 1px solid #eef1f6 !important;
+}
+.va-table-thead-theme thead th:nth-child(1) {
+    border-radius: 6px 0px 0px 0px;
+}
+.va-table-thead-theme thead th:nth-last-child(2) {
+    border-radius: 0px 6px 0px 0px;
+}
+.va-table-thead-theme thead th:nth-last-child(1) {
+    border-radius: 0px 6px 0px 0px;
+}
+.va-table-thead-theme .el-table__empty-text {
+    line-height: 396px!important;
+    width: 50%;
+    color: #666666;
+    height: 220px;
+}

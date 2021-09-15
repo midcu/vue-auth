@@ -1,0 +1,76 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.va-container {
+    background: #e9e9e9;
+    overflow-y: auto;
+}
+
+.va-filled {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.va-menu-vertical {
+    height: 100%;
+}
+.va-menu-vertical:not(.el-menu--collapse) {
+    width: 210px;
+}
+
+.va-dialog-submit .el-dialog__body {
+    padding: 10px 20px;
+}
+
+.va-iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-width: 0px;
+}
+
+.va-building-main {
+    text-align: center;
+    flex-direction: column;
+    background: #fff;
+    display: flex;
+    height: 100%;
+}
+.va-building-errorpng{
+    height: 240px;
+    margin: 8% auto 16px;
+}
+.va-building-atxt{
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.va-system-bt-search.el-input{
+    width: 200px;
+    margin-right: 10px;
+}
+
+.va-page404-main {
+    text-align: center;
+    flex-direction: column;
+    background: #fff;
+    display: flex;
+    height: 100%;
+}
+.va-page404-errorpng{
+    font-size: 180px;
+    color: #9a9a9a;
+    height: 240px;
+    margin: 5% auto 16px;
+}
+.va-page404-atxt{
+    font-size: 20px;
+    text-decoration: none;
+    color:#1392ee;
+    font-weight: 600;
+}

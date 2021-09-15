@@ -1,0 +1,56 @@
+/** 顶部栏的颜色主题 */
+.va-main-header {
+    display: flex;
+    background-color: #262626;
+    color: #fff;
+    font-size: 12px;
+    height: 58px;
+    line-height: 58px;
+    border-bottom: 1px solid #000;
+}
+.va-main-header ::selection{
+    background-color:rgba(30, 76, 78, 0);
+}
+.va-main-header-name {
+    width: 190px;
+    font-size: 20px;
+}
+
+.va-main-header-info {
+    display: flex;
+    width: 190px;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.va-main-header-info-name {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+}
+/* 侧边栏颜色主题 */
+.va-main-aside {
+    transition: .3s width ease-in-out;
+    background-color: #262626;
+}
+
+.va-main-aside .el-menu {
+    background-color: transparent !important;
+}
+
+.va-main-aside .el-menu-item.is-active {
+    color: #409EFF !important;
+}
+
+.va-main-aside .el-menu-item,
+.va-main-aside .el-submenu__title {
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+.va-main-aside .el-menu-item:focus, 
+.va-main-aside .el-menu-item:hover, 
+.va-main-aside .el-submenu__title:focus, 
+.va-main-aside .el-submenu__title:hover {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}

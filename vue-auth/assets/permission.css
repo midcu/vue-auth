@@ -1,0 +1,32 @@
+.va-permission-tree {
+    padding-left: 20px;
+}
+.va-permission-tree .el-tree-node__content {
+    height: 45px;
+    font-size: 14px;
+}
+.va-permission-tree-header {
+    border-bottom: 1px solid #ebeef5;
+    justify-content: space-between;
+    display: flex;
+    padding: 10px;
+    background: #fff;
+    font-size: 14px;
+    color: #909399;
+    font-weight: bold;
+    padding-left: 32px;
+}
+
+.va-permission-tree-body {
+    justify-content: space-between;
+    display: flex;
+    font-size: 14px;
+    color: #909399;
+    line-height: 45px;
+}
+.va-permission-tree-desc {
+    display: flex;
+}
+.va-permission-tree-desc>span {
+    width: 220px;
+}

@@ -1,0 +1,30 @@
+.va-main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.va-main-content-title {
+    padding-left:20px;
+    background: #ffffff;
+    line-height: 50px;
+}
+
+.va-main-content-des {
+    line-height: 14px;
+    font-size:14px;
+    color: #909399;
+    padding-bottom: 15px;
+}
+
+.va-main-content-header {
+    margin-top: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    display: flex;
+}
+
+.va-main-content-button-item.el-button {
+    margin: 0 10px;
+}

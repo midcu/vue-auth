@@ -1,0 +1,75 @@
+.el-submenu .el-menu-item {
+    user-select: none;
+}
+.el-submenu__title span {
+    user-select: none;
+}
+.va-menu-tree {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.va-menu-tree .el-tree-node__content {
+    height: 45px;
+}
+
+.va-menu-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 8px;
+}
+
+.va-menu-tree-header {
+    border-bottom: 1px solid #ebeef5;
+    display: flex;
+    padding: 10px;
+    padding-left: 34px;
+    background: #fff;
+    font-size: 14px;
+    color: #909399;
+    font-weight:bold;
+}
+
+.va-menu-tree-node-header-title>span {
+    display: inline-block;
+    width: 144px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.va-menu-tree-node-header-title .va-menu-tree-node-span {
+    width: 200px;
+}
+
+.va-full-radio {
+    width: 100%;
+}
+.va-full-radio label{
+    width: 50%;
+}
+.va-full-radio span{
+    width: 100%;
+}
+
+.va-main-aside {
+    overflow: hidden !important;
+}
+
+.va-scrollbar {
+    height: calc(100% + 17px);
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1670px) {
+    .va-menu-tree-node-header-title>span {
+        display: inline-block;
+        width: 50px;
+        text-align: center;
+    }
+    .va-menu-tree-node-header-title .va-menu-tree-node-span {
+        width: 200px;
+    }
+}
