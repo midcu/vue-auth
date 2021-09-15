@@ -13,7 +13,7 @@ npm install -S @midcu/vue-auth element-ui axios
 #### 可配置内容，详见[config](https://github.com/midcu/vue-auth/blob/master/src/auth/config/config.js)，其他配置可详见项目的具体代码
 ```
 import Axios from 'axios'
-import Auth from 'vue-auth'
+import Auth from '@midcu/vue-auth'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
