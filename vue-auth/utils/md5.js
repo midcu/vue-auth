@@ -9,12 +9,12 @@
 /*
  * Convert a 32-bit number to a hex string with ls-byte first
  */
-var hex_chr = '0123456789abcdef';
+var hexChr = '0123456789abcdef';
 function rhex (num) {
     var str = '';
     for (var j = 0; j <= 3; j++) {
-        str += hex_chr.charAt((num >> (j * 8 + 4)) & 0x0F) +
-            hex_chr.charAt((num >> (j * 8)) & 0x0F);
+        str += hexChr.charAt((num >> (j * 8 + 4)) & 0x0F) +
+            hexChr.charAt((num >> (j * 8)) & 0x0F);
     }
     return str;
 }
@@ -23,11 +23,11 @@ function rhex (num) {
  * Convert a string to a sequence of 16-word blocks, stored as an array.
  * Append padding bits and the length, as described in the MD5 standard.
  */
-function str2blks_MD5 (str) {
+function str2blksMD5 (str) {
     var nblk = ((str.length + 8) >> 6) + 1;
     var blks = new Array(nblk * 16);
     for (var i = 0; i < nblk * 16; i++) blks[i] = 0;
-    for (var i = 0; i < str.length; i++) { blks[i >> 2] |= str.charCodeAt(i) << ((i % 4) * 8); }
+    for (i = 0; i < str.length; i++) { blks[i >> 2] |= str.charCodeAt(i) << ((i % 4) * 8); }
     blks[i >> 2] |= 0x80 << ((i % 4) * 8);
     blks[nblk * 16 - 2] = str.length * 8;
     return blks;
@@ -74,7 +74,7 @@ function ii (a, b, c, d, x, s, t) {
  * Take a string and return the hex representation of its MD5.
  */
 function calcMD5 (str) {
-    var x = str2blks_MD5(str);
+    var x = str2blksMD5(str);
     var a = 1732584193;
     var b = -271733879;
     var c = -1732584194;

@@ -208,7 +208,7 @@ export default {
                 phone: '',
                 email: '',
                 description: ''
-            },
+            };
             this.submitFormDialog = true;
         },
         resetPasswd (row) {
@@ -233,7 +233,7 @@ export default {
                 phone: row.phone,
                 email: row.email,
                 description: row.description
-            },
+            };
             this.submitFormDialog = true;
         },
         submit () {
