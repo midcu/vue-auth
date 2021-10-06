@@ -17,6 +17,15 @@
                 </transition>
             </div>
             <div class="va-login-form-item">
+                <div class="va-login-form-item-captcha">
+                    <input v-model="submit.captchaCode" placeholder="验证码" style="flex: 1;margin-right: 20px;" class="va-input" @keydown="onKeyDown" @input="onPassWordChange">
+                    <el-image @click="changeCaptcha" :src="captchaUrl"></el-image>
+                </div>
+                <transition name="va-zoom-in-top">
+                    <div v-if="error.captchaCode" class="va-input-error">{{ error.captchaCode }}</div> }
+                </transition>
+            </div>
+            <div class="va-login-form-item">
                 <button class="va-button" @click="onSubmit">登录</button>
             </div>
         </div>
@@ -24,17 +33,21 @@
 </template>
 
 <script>
+import calcMD5 from '../utils/md5'
 export default {
     name: 'va-login',
     data () {
         return {
             submit: {
                 username: '',
-                password: ''
+                password: '',
+                captchaCode: ''
             },
+            captchaUrl: '/api/captcha',
             error: {
                 username: undefined,
-                password: undefined
+                password: undefined,
+                captchaCode: undefined
             }
         }
     },
@@ -52,17 +65,17 @@ export default {
             if (!this.submit.password) {
                 this.error.password = '请输入密码';
             }
+            if (!this.submit.captchaCode) {
+                this.error.captchaCode = '请输入验证码';
+                return
+            }
             if (this.submit.username && this.submit.password) {
-                this.$authApi.LoginIn({
-                    username: this.submit.username,
-                    password: this.submit.password
-                }).then((result) => {
-                    if (result.err) {
-                        this.$message.error(result.err)
-                    } else {
-                        this.$store.commit('USER_TOKEN', result.token)
-                        this.$router.push({ path: this.$route.query.redirect || '/', replace: true }).catch(() => { })
-                    }
+                this.$authApi.FormLogin(
+                    'username=' + this.submit.username + '&password=' + calcMD5('vue-auth' + this.submit.password) + '&captchaCode=' + this.submit.captchaCode
+                ).then((result) => {
+                    this.$router.push({ path: this.$route.query.redirect || '/', replace: true }).catch(() => { })
+                }).catch(() => {
+                    this.changeCaptcha();
                 })
             }
         },
@@ -79,6 +92,9 @@ export default {
             } else {
                 this.error.password = '请输入密码';
             }
+        },
+        changeCaptcha () {
+            this.captchaUrl = '/api/captcha?' + Math.random()
         }
     }
 }

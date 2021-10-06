@@ -13,7 +13,7 @@ import fileConfig from '../config/config'
 2：用户信息
 3：权限列表
 */
-function initRouterMenus (router, store, loader, to, next) {
+function initRouterMenus (router, store, loader, to, from, next) {
     AuthApi.InitProject().then(({ menus, user, permissions }) => {
         // 构建菜单
         const routerMenus = BuildMenus(menus, loader);
@@ -29,12 +29,13 @@ function initRouterMenus (router, store, loader, to, next) {
         }
 
         store.commit('SET_MENUS', routerMenus || []);
-        store.commit('SET_USER', user);
         store.commit('SET_PERMISSIONS', permissions || []);
+        store.commit('USER_LOGIN', user);
 
         next({ path: to.fullPath })
-    }).catch((e) => {
-        console.log('系统接口出现问题：请联系后台开发人员！', e)
+    }).catch(() => {
+        // 获取菜单失败 跳转至登陆页面
+        next({ name: 'login', redirect: from.fullPath });
     })
 }
 
@@ -47,26 +48,22 @@ export default function initRouter (router, loader, store) {
     }
 
     router.beforeEach((to, from, next) => {
-        if (to.meta && to.meta.withoutLogin) {
-            // 不需要登录
-            if (store.getters.hasAuthed) {
-                // 已经登陆后跳转到首页
+        if (store.getters.hasAuthed) {
+            // 已经登陆
+            if (to.meta && to.meta.withoutLogin) {
+                // 不需要登陆 如：login 跳转到首页
                 next({ path: '/', replace: true })
             } else {
                 next()
             }
-        } else if (store.getters.hasAuthed) {
-            // 已经登陆
-            if (store.getters.hasMenus) {
-                // 已经获取过菜单
-                next();
-            } else {
-                // 为获取 获取菜单
-                initRouterMenus(router, store, loader, to, next);
-            }
         } else {
-            // 未登录跳转到登录
-            next({ name: 'login', redirect: from.fullPath })
+            if (to.meta && to.meta.withoutLogin) {
+                // 不需要登陆 如：login 跳转到首页
+                next()
+            } else {
+                // 获取菜单！
+                initRouterMenus(router, store, loader, to, from, next);
+            }
         }
     });
 }

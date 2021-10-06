@@ -61,6 +61,7 @@ export default {
             case 'personal':
                 break;
             case 'logout':
+                this.$authApi.Logout();
                 this.$store.commit('USER_LOGOUT')
                 break;
             case 'login':

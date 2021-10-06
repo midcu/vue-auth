@@ -1,44 +1,13 @@
 export default {
-    requestInter: null,
-    responseInter: null,
-    init (request, store) {
+    init (request) {
         this.request = request;
-
-        this.requestInter = request.interceptors.request.use(function (config) {
-            config.headers.Authorization = 'Bearer ' + store.state.user.token;
-            return config;
-        }, function (error) {
-            return Promise.reject(error);
-        });
-
-        // Todo
-        // 获取菜单应该永远返回403或者200 不管登陆或着没登录
-        // 支持匿名用户 如果没有登录 1：返回403禁止访问 2：返回200，返回匿名的菜单 （token过期也应该返回匿名的菜单或者403）
-
-        this.responseInter = request.interceptors.response.use(function (response) {
-            return response.data;
-        }, function (error) {
-            if (error.response.status === 403) {
-                // 403代表token过期和未登录禁止访问
-                // 401代表无权限访问
-                // 403则清空登录凭据  然后
-                store.commit('USER_LOGOUT');
-            } else {
-                // Message({ message: res.message, type: 'error', center: true, duration: 5 * 1000 });
-            }
-            return Promise.reject(error);
-        });
-    },
-    ejectInterceptors () {
-        this.request.interceptors.request.eject(this.requestInter);
-        this.request.interceptors.response.eject(this.responseInter);
     },
     request: function () {
 
     },
     InitProject: function () {
         return this.request({
-            url: '/users/init',
+            url: '/init',
             method: 'get'
         })
     },
@@ -68,10 +37,24 @@ export default {
             method: 'post'
         })
     },
-    LoginIn: function (data) {
+    Login: function (data) {
         return this.request({
             url: '/login',
             method: 'post',
+            data: data
+        })
+    },
+    Logout: function () {
+        return this.request({
+            url: '/logout',
+            method: 'get'
+        })
+    },
+    FormLogin: function (data) {
+        return this.request({
+            url: '/login',
+            method: 'post',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
             data: data
         })
     },
