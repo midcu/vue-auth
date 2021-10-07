@@ -16,6 +16,7 @@
             </div>
         </div>
         <el-tree
+            v-loading = "loading"
             ref="tree"
             :data="permissions"
             class="va-menu-tree"
@@ -79,6 +80,7 @@ export default {
     name: 'va-menus',
     data () {
         return {
+            loading: true,
             permissions: [],
             permissionList: [],
             defExKeys: [],
@@ -109,12 +111,13 @@ export default {
     methods: {
         search () {
             this.$authApi.GetAllPermissions().then((result) => {
+                this.loading = false;
                 this.permissions = buildMenuTree(result.data);
                 this.permissionList = [{ id: 1, title: '根级目录' }].concat(this.permissions);
                 if (this.defNodeExpandId) {
                     this.defExKeys = [this.defNodeExpandId];
                 }
-            })
+            }).catch(() => { this.loading = false; });
         },
         onNodeExpand (data) {
             this.defNodeExpandId = data.id;

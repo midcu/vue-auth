@@ -10,7 +10,7 @@
                 <el-button size="small" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
             </div>
         </div>
-        <el-table :data="data" class="va-table-thead-theme">
+        <el-table :data="data" class="va-table-thead-theme" v-loading="loading">
             <el-table-column prop="nickname" label="昵称" />
             <el-table-column prop="username" label="账号" />
             <el-table-column prop="phone" label="电话" />
@@ -105,6 +105,7 @@ export default {
     name: 'va-users',
     data () {
         return {
+            loading: true,
             total: 1,
             page: 1,
             pageSize: 10,
@@ -164,9 +165,10 @@ export default {
                 pageSize: this.pageSize,
                 nickname: this.nickname
             }).then((resData) => {
+                this.loading = false;
                 this.data = resData.data;
                 this.total = resData.page.total;
-            })
+            }).catch(() => { this.loading = false; });
         },
         getRoles () {
             this.$authApi.GetAllRoles({

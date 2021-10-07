@@ -23,6 +23,7 @@
             </div>
         </div>
         <el-tree
+            v-loading="loading"
             ref="tree"
             :data="menus"
             class="va-menu-tree"
@@ -82,6 +83,7 @@ export default {
             defExKeys: [],
             defNodeExpandId: '',
             submitFormDialog: false,
+            loading: true,
             menuType: ['目录', '菜单', '按钮']
         }
     },
@@ -91,15 +93,12 @@ export default {
     methods: {
         search () {
             this.$authApi.GetMenus().then((result) => {
-                if (result.err) {
-                    this.$message.error(result.err)
-                } else {
-                    this.menus = buildMenuTree(result.data);
-                    if (this.defNodeExpandId) {
-                        this.defExKeys = [this.defNodeExpandId];
-                    }
+                this.loading = false;
+                this.menus = buildMenuTree(result.data);
+                if (this.defNodeExpandId) {
+                    this.defExKeys = [this.defNodeExpandId];
                 }
-            })
+            }).catch(() => { this.loading = false; });
         },
         onNodeExpand (data) {
             this.defNodeExpandId = data.id;

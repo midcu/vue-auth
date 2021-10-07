@@ -12,7 +12,7 @@
         <el-row>
             <!--角色管理-->
             <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" style="padding-left: 5px;background: #fff;padding-bottom: 20px;">
-                <el-table class="va-table-thead-theme" :data="data" size="small">
+                <el-table class="va-table-thead-theme" :data="data" v-loading="loading">
                     <el-table-column prop="name" width="180px" label="名称" />
                     <el-table-column :show-overflow-tooltip="true" prop="description" label="描述" />
                     <el-table-column :show-overflow-tooltip="true" width="180px" prop="createTime" label="创建日期">
@@ -40,7 +40,7 @@
             </el-col>
             <!-- 菜单 -->
             <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-                <el-card shadow="never" style="margin-left: 10px;">
+                <el-card shadow="never" style="margin-left: 10px;" v-loading="loading">
                     <div slot="header">
                         <span>菜单分配<span style="color: #67C23A">（{{ currectRole.name }}）</span></span>
                         <el-button v-permission="['roles:menus']" icon="el-icon-check" size="small" style="float: right; padding: 3px 0" type="text" @click="saveMenu">
@@ -54,7 +54,7 @@
             </el-col>
             <!-- 授权 -->
             <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-                <el-card shadow="never" style="margin-left: 10px;">
+                <el-card shadow="never" style="margin-left: 10px;" v-loading="loading">
                     <div slot="header">
                         <span>权限分配<span style="color: #67C23A">（{{ currectRole.name }}）</span></span>
                         <el-button v-permission="['roles:permissions']" icon="el-icon-check" size="small" style="float: right; padding: 3px 0" type="text" @click="savePermission">
@@ -90,6 +90,7 @@ export default {
     name: 'va-roles',
     data () {
         return {
+            loading: true,
             searchKey: '',
             total: 1,
             page: 1,
@@ -126,9 +127,10 @@ export default {
                 page: page || 1,
                 pageSize: this.pageSize
             }).then((result) => {
+                this.loading = false;
                 this.data = result.data;
                 this.total = result.page.total;
-            })
+            }).catch(() => { this.loading = false; });
         },
         getMenus () {
             this.$authApi.GetAllMenus().then((resData) => {
