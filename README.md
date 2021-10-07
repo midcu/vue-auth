@@ -39,6 +39,23 @@ new Vue({
 }).$mount('#app')
 
 ```
+
+### 后台项目[GITHUB]](https://github.com/midcu/vue-auth-server)
+1、新建spring boot项目，添加此依赖包。
+2、配置mysql的数据库地址，运行项目。
+3、配置vue项目vue.config.js代理地址。
+
+相关配置和如何使用可查看项目的auth-main模块的配置。
+
+**auth-security-session**包含菜单，用户，角色，和登录验证码的接口。
+
+```
+<dependency>
+    <groupId>com.midcu</groupId>
+    <artifactId>auth-security-session</artifactId>
+    <version>0.0.2</version>
+</dependency>
+```
 ### 运行测试
 建议使用vue-cli搭建vue项目(ps:运行前清除原有的route地址)。
 
