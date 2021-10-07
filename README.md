@@ -42,7 +42,9 @@ new Vue({
 
 ### 后台项目[GITHUB](https://github.com/midcu/vue-auth-server)
 1、新建spring boot项目，添加此依赖包。
+
 2、配置mysql的数据库地址，运行项目。
+
 3、配置vue项目vue.config.js代理地址。
 
 相关配置和如何使用可查看项目的auth-main模块的配置。
