@@ -8,6 +8,12 @@ export function hasClass (el, cls) {
     }
 };
 
+function trim (val) {
+    if (val && typeof val === 'string') {
+        val.trim()
+    }
+}
+
 export function addClass (el, cls) {
     if (!el || !cls) return;
     var curClass = el.className;
@@ -66,7 +72,7 @@ export function off (element, event, handler) {
     }
 };
 
-var scrollBarWidth = undefined;
+var scrollBarWidth;
 
 export function getScrollBarWidth () {
     if (scrollBarWidth !== undefined) {
