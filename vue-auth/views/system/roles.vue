@@ -20,7 +20,7 @@
                             <span>{{ scope.row.createTime }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" width="220px" align="center">
+                    <el-table-column label="操作" width="220px" align="center" v-if="$vaCheckPermission(['roles:menus', 'roles:edit', 'roles:del'])">
                         <template slot-scope="scope">
                             <el-button v-permission="['roles:menus']" icon="el-icon-lock" size="mini" type="text" @click="getRoleMenus(scope.row)">
                                 权限

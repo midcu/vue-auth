@@ -12,7 +12,7 @@
             <div class="va-permission-tree-desc">
                 <span style="width: 200px;">权限标识</span>
                 <span style="width: 400px;">权限描述</span>
-                <span style="width: 140px;">操作</span>
+                <span style="width: 140px;" v-if="$vaCheckPermission(['permissions:edit', 'permissions:del'])">操作</span>
             </div>
         </div>
         <el-tree
@@ -32,9 +32,9 @@
                 <div class="va-permission-tree-desc">
                     <span style="width: 200px;" :title="data.name">{{ data.name }}</span>
                     <span style="width: 400px;">{{ data.description }}</span>
-                    <span style="width: 140px;">
-                        <el-button v-permission="['menus:edit']" icon="el-icon-edit" type="text" size="mini" @click.stop="edit(data)">编辑</el-button>
-                        <el-popconfirm v-permission="['menus:del']" style="margin-left: 10px;" title="确定永久删除该菜单吗？" @confirm="del(data)">
+                    <span style="width: 140px;" v-if="$vaCheckPermission(['permissions:edit', 'permissions:del'])">
+                        <el-button v-permission="['permissions:edit']" icon="el-icon-edit" type="text" size="mini" @click.stop="edit(data)">编辑</el-button>
+                        <el-popconfirm v-permission="['permissions:del']" style="margin-left: 10px;" title="确定永久删除该菜单吗？" @confirm="del(data)">
                             <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除</el-button>
                         </el-popconfirm>
                     </span>

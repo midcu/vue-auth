@@ -27,7 +27,7 @@
                     <span>{{ scope.row.createTime }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="285" align="center" fixed="right">
+            <el-table-column label="操作" width="285" align="center" v-if="$vaCheckPermission(['users:edit', 'users:del'])">
                 <template slot-scope="scope">
                     <el-button v-permission="['users:edit']" icon="el-icon-lock" size="mini" type="text" @click="resetPasswd(scope.row)">
                         密码重置
@@ -287,7 +287,7 @@ export default {
         changeEnabled (row, state) {
             this.$authApi.EditUser(row.id, { state: state }).then(() => {
                 this.$message.success('操作成功')
-            })
+            }).catch(() => { row.state = row.state === 1 ? 0 : 1 })
         }
     }
 }

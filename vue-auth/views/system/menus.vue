@@ -18,7 +18,7 @@
                     <span>排序</span>
                     <span>可见</span>
                     <span>图标</span>
-                    <span style="width: 140px;">操作</span>
+                    <span style="width: 140px;" v-if="$vaCheckPermission(['menus:edit', 'menus:del'])">操作</span>
                 </span>
             </div>
         </div>
@@ -44,7 +44,7 @@
                     <span>{{ data.sort }}</span>
                     <span :style="{ color: data.display ? '#67c23a' : '#e6a23c' }">{{ data.display ? "是" : "否" }}</span>
                     <span><i :class="data.icon" /></span>
-                    <span style="width: 140px;">
+                    <span style="width: 140px;" v-if="$vaCheckPermission(['menus:edit', 'menus:del'])">
                         <el-button v-permission="['menus:edit']" icon="el-icon-edit" type="text" size="mini" @click.stop="edit(data)">编辑</el-button>
                         <el-popconfirm v-permission="['menus:del']" style="margin-left: 10px;" title="确定永久删除该菜单吗？" @confirm="del(data)">
                             <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除</el-button>
