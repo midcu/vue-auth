@@ -117,6 +117,7 @@ export default {
                 display: false,
                 sort: 1,
                 permission: '',
+                state: 1,
                 description: ''
             },
             rules: {
@@ -208,6 +209,7 @@ export default {
                 display: false,
                 sort: 1,
                 permission: '',
+                state: 1,
                 description: ''
             }
         },

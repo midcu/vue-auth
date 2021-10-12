@@ -11,7 +11,7 @@
         </div>
         <el-row>
             <!--角色管理-->
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" style="padding-left: 5px;background: #fff;padding-bottom: 20px;">
+            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :style="{ width: !$vaCheckPermission(['roles:menus:reset', 'roles:permissions:reset']) ? '100%': '' }" style="padding-left: 5px;background: #fff;padding-bottom: 20px;">
                 <el-table class="va-table-thead-theme" :data="data" v-loading="loading">
                     <el-table-column prop="name" width="180px" label="名称" />
                     <el-table-column :show-overflow-tooltip="true" prop="description" label="描述" />
@@ -39,7 +39,7 @@
                 <el-pagination background style="text-align: center" :current-page.sync="page" :page-size="pageSize" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
             </el-col>
             <!-- 菜单 -->
-            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
+            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6"  v-if="$vaCheckPermission(['roles:menus:reset'])">
                 <el-card shadow="never" style="margin-left: 10px;" v-loading="loading">
                     <div slot="header">
                         <span>菜单分配<span style="color: #67C23A">（{{ currectRole.name }}）</span></span>
@@ -53,7 +53,7 @@
                 </el-card>
             </el-col>
             <!-- 授权 -->
-            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
+            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" v-if="$vaCheckPermission(['roles:permissions:reset'])">
                 <el-card shadow="never" style="margin-left: 10px;" v-loading="loading">
                     <div slot="header">
                         <span>权限分配<span style="color: #67C23A">（{{ currectRole.name }}）</span></span>

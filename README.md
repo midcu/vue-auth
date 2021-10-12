@@ -1,6 +1,6 @@
 # vue-auth
 一个基于vue的前端框架**插件**，包括**权限验证**、**用户管理**、**角色管理**、**菜单管理**、**权限管理**等功能。
-#### 项目[demo](https://midcu.github.io/)，用户密码：admin：123
+#### 项目[demo](https://midcu.github.io/)，用户密码：user：123456
 ```
 依靠vue-auth可以迅速的搭建起一个新的管理系统
 ```
