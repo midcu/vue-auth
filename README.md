@@ -55,7 +55,7 @@ new Vue({
 <dependency>
     <groupId>com.midcu</groupId>
     <artifactId>auth-security-session</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 ### 运行测试

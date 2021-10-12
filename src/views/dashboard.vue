@@ -90,7 +90,7 @@ new Vue({
                     <pre aria-label="Copy" class="ClipboardButton btn js-pre m-2 p-0 tooltipped-no-delay" data-copy-feedback="Copied!" data-tooltip-direction="w" value="<dependency>
     <groupId>com.midcu</groupId>
     <artifactId>auth-security-session</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 " tabindex="0" role="button">
                     </pre>
