@@ -10,11 +10,11 @@
                 <el-button size="small" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
             </div>
         </div>
-        <el-table :data="data" class="va-table-thead-theme" v-loading="loading">
-            <el-table-column prop="nickname" label="昵称" />
-            <el-table-column prop="username" label="账号" />
-            <el-table-column prop="phone" label="电话" />
-            <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱" />
+        <el-table :data="data" class="va-table-thead-theme" v-loading="loading" element-loading-spinner="el-icon-loading">
+            <el-table-column prop="username" align="center" label="账号" />
+            <el-table-column prop="nickname" align="center" label="昵称" />
+            <el-table-column prop="phone" align="center" label="电话" />
+            <el-table-column :show-overflow-tooltip="true" align="center" prop="email" label="邮箱" />
             <el-table-column label="状态" align="center">
                 <template slot-scope="scope">
                     <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0" active-color="#67C23A" inactive-color="#F56C6C"
@@ -22,7 +22,7 @@
                     />
                 </template>
             </el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建日期">
+            <el-table-column :show-overflow-tooltip="true" align="center" prop="createTime" label="创建日期">
                 <template slot-scope="scope">
                     <span>{{ scope.row.createTime }}</span>
                 </template>
@@ -45,7 +45,7 @@
             </el-table-column>
         </el-table>
         <!--分页组件-->
-        <el-pagination background style="padding: 20px;background: #fff;text-align: center" :current-page.sync="page" :page-size="pageSize" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
+        <el-pagination background style="padding: 20px;background: #fff;text-align: center" :current-page.sync="page" :page-size="size" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
         <el-dialog custom-class="va-dialog-submit" :visible.sync="submitFormDialog" width="580px" title="用户" :close-on-click-modal="false">
             <el-form ref="submitForm" :model="submitForm" :rules="rules" size="small" label-width="80px">
                 <el-form-item v-if="!submitForm.id" label="账号" prop="username">
@@ -105,10 +105,10 @@ export default {
     name: 'va-users',
     data () {
         return {
-            loading: true,
+            loading: false,
             total: 1,
             page: 1,
-            pageSize: 10,
+            size: 10,
             nickname: '',
             submitFormDialog: false,
             roleSetDialog: false,
@@ -160,21 +160,22 @@ export default {
     },
     methods: {
         search (page) {
+            this.loading = true;
             this.$authApi.GetAllUsers({
                 page: page || 1,
-                pageSize: this.pageSize,
+                size: this.size,
                 nickname: this.nickname
             }).then((resData) => {
                 this.loading = false;
-                this.data = resData.data;
-                this.total = resData.page.total;
+                this.data = resData.data.content;
+                this.total = resData.data.totalElements;
             }).catch(() => { this.loading = false; });
         },
         getRoles () {
             this.$authApi.GetAllRoles({
                 paged: false
             }).then((result) => {
-                this.roles = result.data;
+                this.roles = result.data.content;
             })
         },
         pwdSubmit () {
@@ -209,7 +210,8 @@ export default {
                 password: '',
                 phone: '',
                 email: '',
-                description: ''
+                description: '',
+                state: 1
             };
             this.submitFormDialog = true;
         },
@@ -221,7 +223,11 @@ export default {
         },
         setRole (row) {
             if (this.$refs.roleForm) this.$refs.roleForm.resetFields();
-            this.roleForm.roleIds = row.roleIds;
+
+            this.$authApi.getUserRoles(row.id).then((resData) => {
+                this.roleForm.roleIds = resData.data;
+            })
+
             this.roleForm.id = row.id;
             this.roleSetDialog = true;
         },
@@ -279,7 +285,7 @@ export default {
             })
         },
         sizeChange (value) {
-            this.pageSize = value
+            this.size = value
         },
         pageChange (val) {
             this.search(val)

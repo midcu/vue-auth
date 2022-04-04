@@ -74,3 +74,20 @@ html, body {
     color:#1392ee;
     font-weight: 600;
 }
+
+.va-pagination {
+    padding: 20px;
+    background: #fff;
+    text-align: right;
+}
+
+.va-table-thead-theme th.el-table__cell {
+    background-color: #f5f7fa !important;
+}
+
+.va-table-thead-theme .el-table__empty-text {
+    line-height: 300px!important;
+    width: 50%;
+    color: #666666;
+    height: 300px;
+}

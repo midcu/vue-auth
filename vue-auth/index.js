@@ -1,5 +1,5 @@
 import './assets/index.css'
-import { LeftMenuPage, TopMenuPage, MainContent, ScrollBar, ThemeBar } from './components/index.js'
+import { LeftMenuPage, TopMenuPage, MainContent, ScrollBar, ThemeBar, Pagination } from './components/index.js'
 import registerModule from './store'
 import registerDirective from './directive'
 import initRouter from './router'
@@ -32,6 +32,7 @@ Auth.install = function (Vue, options) {
     Vue.component(MainContent.name, MainContent)
     Vue.component(ScrollBar.name, ScrollBar)
     Vue.component(ThemeBar.name, ThemeBar)
+    Vue.component(Pagination.name, Pagination)
 
     AuthApi.init(options.request, options.store)
 

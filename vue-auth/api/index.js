@@ -66,7 +66,7 @@ export default {
     },
     GetAllMenus: function () {
         return this.request({
-            url: '/menus/list/all',
+            url: '/menus/lite',
             method: 'get'
         })
     },
@@ -171,6 +171,11 @@ export default {
             url: '/users',
             data: data,
             method: 'get'
+        })
+    },
+    getUserRoles: function (id) {
+        return this.request({
+            url: '/users/roles/' + id
         })
     },
     resetUserRoles: function (id, roleIds) {

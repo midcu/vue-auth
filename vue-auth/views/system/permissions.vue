@@ -17,6 +17,7 @@
         </div>
         <el-tree
             v-loading = "loading"
+            element-loading-spinner="el-icon-loading"
             ref="tree"
             :data="permissions"
             class="va-menu-tree"
@@ -112,7 +113,7 @@ export default {
         search () {
             this.$authApi.GetAllPermissions().then((result) => {
                 this.loading = false;
-                this.permissions = buildMenuTree(result.data);
+                this.permissions = buildMenuTree(result.data.content);
                 this.permissionList = [{ id: 1, title: '根级目录' }].concat(this.permissions);
                 if (this.defNodeExpandId) {
                     this.defExKeys = [this.defNodeExpandId];
@@ -149,6 +150,7 @@ export default {
                 name: '',
                 title: '',
                 description: '',
+                state: 1,
                 pid: 1
             };
             this.submitFormDialog = true;

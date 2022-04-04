@@ -11,7 +11,10 @@ module.exports = {
         parser: 'babel-eslint'
     },
     rules: {
+        quotes: "off",
         semi: 'off',
+        "space-before-function-paren": 'off',
+        "no-unused-expressions": 'off',
         indent: ['error', 4],
         'vue/html-indent': ['error', 4],
         'import/no-webpack-loader-syntax': 'off',

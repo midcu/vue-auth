@@ -24,6 +24,7 @@
         </div>
         <el-tree
             v-loading="loading"
+            element-loading-spinner="el-icon-loading"
             ref="tree"
             :data="menus"
             class="va-menu-tree"
@@ -94,7 +95,7 @@ export default {
         search () {
             this.$authApi.GetMenus().then((result) => {
                 this.loading = false;
-                this.menus = buildMenuTree(result.data);
+                this.menus = buildMenuTree(result.data.content);
                 if (this.defNodeExpandId) {
                     this.defExKeys = [this.defNodeExpandId];
                 }

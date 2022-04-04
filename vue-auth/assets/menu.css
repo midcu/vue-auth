@@ -26,7 +26,8 @@
     display: flex;
     padding: 10px;
     padding-left: 34px;
-    background: #fff;
+    background: #f5f7fa;
+    height: 27px;
     font-size: 14px;
     color: #909399;
     font-weight:bold;

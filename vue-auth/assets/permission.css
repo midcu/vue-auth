@@ -10,11 +10,13 @@
     justify-content: space-between;
     display: flex;
     padding: 10px;
-    background: #fff;
+    background: #f5f7fa;
+    height: 27px;
     font-size: 14px;
     color: #909399;
     font-weight: bold;
     padding-left: 32px;
+    line-height: 2;
 }
 
 .va-permission-tree-body {

@@ -9,64 +9,52 @@
                 <el-button v-permission="['roles:add']" size="small" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
             </div>
         </div>
-        <el-row>
-            <!--角色管理-->
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" :style="{ width: !$vaCheckPermission(['roles:menus:reset', 'roles:permissions:reset']) ? '100%': '' }" style="padding-left: 5px;background: #fff;padding-bottom: 20px;">
-                <el-table class="va-table-thead-theme" :data="data" v-loading="loading">
-                    <el-table-column prop="name" width="180px" label="名称" />
-                    <el-table-column :show-overflow-tooltip="true" prop="description" label="描述" />
-                    <el-table-column :show-overflow-tooltip="true" width="180px" prop="createTime" label="创建日期">
-                        <template slot-scope="scope">
-                            <span>{{ scope.row.createTime }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="操作" width="220px" align="center" v-if="$vaCheckPermission(['roles:menus', 'roles:edit', 'roles:del'])">
-                        <template slot-scope="scope">
-                            <el-button v-permission="['roles:menus']" icon="el-icon-lock" size="mini" type="text" @click="getRoleMenus(scope.row)">
-                                权限
-                            </el-button>
-                            <el-button v-permission="['roles:edit']" icon="el-icon-edit" style="margin-left: 0;" size="mini" type="text" @click="edit(scope.row)">
-                                编辑
-                            </el-button>
-                            <el-popconfirm v-permission="['roles:del']" title="确定永久删除该角色吗？" @confirm="remove(scope.row)">
-                                <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除</el-button>
-                            </el-popconfirm>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <br>
-                <!--分页组件-->
-                <el-pagination background style="text-align: center" :current-page.sync="page" :page-size="pageSize" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
-            </el-col>
-            <!-- 菜单 -->
-            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6"  v-if="$vaCheckPermission(['roles:menus:reset'])">
-                <el-card shadow="never" style="margin-left: 10px;" v-loading="loading">
-                    <div slot="header">
-                        <span>菜单分配<span style="color: #67C23A">（{{ currectRole.name }}）</span></span>
-                        <el-button v-permission="['roles:menus']" icon="el-icon-check" size="small" style="float: right; padding: 3px 0" type="text" @click="saveMenu">
-                            保存
-                        </el-button>
-                    </div>
-                    <el-tree ref="menu" :data="menus" :default-checked-keys="menuIds" :props="defaultProps"
-                             check-strictly accordion show-checkbox node-key="id"
-                    />
-                </el-card>
-            </el-col>
-            <!-- 授权 -->
-            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" v-if="$vaCheckPermission(['roles:permissions:reset'])">
-                <el-card shadow="never" style="margin-left: 10px;" v-loading="loading">
-                    <div slot="header">
-                        <span>权限分配<span style="color: #67C23A">（{{ currectRole.name }}）</span></span>
-                        <el-button v-permission="['roles:permissions']" icon="el-icon-check" size="small" style="float: right; padding: 3px 0" type="text" @click="savePermission">
-                            保存
-                        </el-button>
-                    </div>
-                    <el-tree ref="permission" :data="permissions" :default-checked-keys="permissionIds" :props="defaultProps"
-                             check-strictly accordion show-checkbox node-key="id"
-                    />
-                </el-card>
-            </el-col>
-        </el-row>
+        <!--角色管理-->
+        <el-table class="va-table-thead-theme" :data="data" v-loading="loading" :header-cell-style="{ background: '#eee' }" element-loading-spinner="el-icon-loading">
+            <el-table-column prop="name" width="180px" align="center" label="名称" />
+            <el-table-column :show-overflow-tooltip="true" align="center" prop="description" label="描述" />
+            <el-table-column :show-overflow-tooltip="true" align="center" width="180px" prop="createTime" label="创建日期">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.createTime }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="320px" align="center" v-if="$vaCheckPermission(['roles:menus', 'roles:edit', 'roles:del'])">
+                <template slot-scope="scope">
+                    <el-button v-permission="['roles:menus']" icon="el-icon-lock" size="mini" type="text" @click="openRoleMenus(scope.row)">
+                        分配菜单
+                    </el-button>
+                    <el-button v-permission="['roles:permissions']" icon="el-icon-lock" size="mini" type="text" @click="openRolePermission(scope.row)">
+                        分配权限
+                    </el-button>
+                    <el-button v-permission="['roles:edit']" icon="el-icon-edit" size="mini" type="text" @click="edit(scope.row)">
+                        编辑
+                    </el-button>
+                    <el-popconfirm v-permission="['roles:del']" title="确定永久删除该角色吗？" @confirm="remove(scope.row)">
+                        <el-button slot="reference" type="text" icon="el-icon-delete" style="margin-left: 10px;" size="mini">删除</el-button>
+                    </el-popconfirm>
+                </template>
+            </el-table-column>
+        </el-table>
+        <!--分页组件-->
+        <el-pagination background style="text-align: center; background-color: #fff;padding: 20px;" :current-page.sync="page" :page-size="pageSize" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
+        <el-dialog custom-class="va-dialog-submit" :visible.sync="menuDialog" width="580px" title="分配菜单" :close-on-click-modal="false">
+            <div style="height: 250px;overflow: auto;">
+                <el-tree ref="menu" :default-expanded-keys="menuIds" :data="menus" :default-checked-keys="menuIds" :props="defaultProps" check-strictly accordion show-checkbox node-key="id" />
+            </div>
+            <div slot="footer">
+                <el-button size="small" @click="menuDialog = false">取消</el-button>
+                <el-button size="small" type="primary" @click="saveMenu()">保存</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog custom-class="va-dialog-submit" :visible.sync="permissionDialog" width="580px" title="分配权限" :close-on-click-modal="false">
+            <div style="height: 250px;overflow: auto;">
+                <el-tree ref="permission" :default-expanded-keys="permissionIds" :data="permissions" :default-checked-keys="permissionIds" :props="defaultProps" check-strictly accordion show-checkbox node-key="id"/>
+            </div>
+            <div slot="footer">
+                <el-button size="small" @click="permissionDialog = false">取消</el-button>
+                <el-button size="small" type="primary" @click="savePermission()">保存</el-button>
+            </div>
+        </el-dialog>
         <el-dialog custom-class="va-dialog-submit" :visible.sync="submitFormDialog" width="580px" title="角色" :close-on-click-modal="false" @close="cancel">
             <el-form ref="submitForm" :model="submitForm" :rules="rules" size="small" label-width="80px">
                 <el-form-item label="角色名称" prop="name">
@@ -90,7 +78,9 @@ export default {
     name: 'va-roles',
     data () {
         return {
-            loading: true,
+            loading: false,
+            menuDialog: false,
+            permissionDialog: false,
             searchKey: '',
             total: 1,
             page: 1,
@@ -116,30 +106,29 @@ export default {
         }
     },
     mounted () {
-        this.getMenus()
-        this.getAllPermissions()
         this.search()
     },
     methods: {
         search (page) {
+            this.loading = true;
             this.$authApi.GetAllRoles({
                 name: this.searchKey,
                 page: page || 1,
                 pageSize: this.pageSize
             }).then((result) => {
                 this.loading = false;
-                this.data = result.data;
-                this.total = result.page.total;
+                this.data = result.data.content;
+                this.total = result.data.totalElements;
             }).catch(() => { this.loading = false; });
         },
         getMenus () {
             this.$authApi.GetAllMenus().then((resData) => {
-                this.menus = buildMenuTree(resData.data);
+                this.menus = buildMenuTree(resData.data.content);
             })
         },
         getAllPermissions () {
             this.$authApi.GetAllPermissions().then((resData) => {
-                this.permissions = buildMenuTree(resData.data);
+                this.permissions = buildMenuTree(resData.data.content);
             })
         },
         add () {
@@ -147,7 +136,7 @@ export default {
             this.submitFormDialog = true;
         },
         edit (row) {
-            this.submitForm = { id: row.id, name: row.name, description: row.description };
+            this.submitForm = { id: row.id, name: row.name, description: row.description, state: row.state };
             this.submitFormDialog = true;
         },
         cancel () {
@@ -158,13 +147,13 @@ export default {
             this.$refs.submitForm.validate((valid) => {
                 if (valid) {
                     if (this.submitForm.id) {
-                        this.$authApi.EditRole(this.submitForm.id, { name: this.submitForm.name, description: this.submitForm.description }).then((result) => {
+                        this.$authApi.EditRole(this.submitForm.id, { name: this.submitForm.name, description: this.submitForm.description, state: this.submitForm.state }).then((result) => {
                             this.$message.success('操作成功')
                             this.submitFormDialog = false;
                             this.search();
                         })
                     } else {
-                        this.$authApi.AddRole({ name: this.submitForm.name, description: this.submitForm.description }).then((result) => {
+                        this.$authApi.AddRole({ name: this.submitForm.name, description: this.submitForm.description, state: 1 }).then((result) => {
                             this.$message.success('操作成功')
                             this.submitFormDialog = false;
                             this.search();
@@ -174,30 +163,24 @@ export default {
             });
         },
         saveMenu () {
-            if (this.currectRole.id) {
-                const menuIds = [];
-                this.$refs.menu.getCheckedNodes().forEach(function (data, index) {
-                    menuIds.push(data.id)
-                })
-                this.$authApi.ResetRoleMenus(this.currectRole.id, menuIds).then((result) => {
-                    this.$message.success(result.message)
-                })
-            } else {
-                this.$message.warning('未选中角色')
-            }
+            const menuIds = [];
+            this.$refs.menu.getCheckedNodes().forEach(function (data, index) {
+                menuIds.push(data.id)
+            })
+            this.$authApi.ResetRoleMenus(this.currectRole.id, menuIds).then((result) => {
+                this.$message.success(result.message)
+                this.menuDialog = false;
+            })
         },
         savePermission () {
-            if (this.currectRole.id) {
-                const permissionIds = [];
-                this.$refs.permission.getCheckedNodes().forEach(function (data, index) {
-                    permissionIds.push(data.id)
-                })
-                this.$authApi.ResetRolePermissions(this.currectRole.id, permissionIds).then((result) => {
-                    this.$message.success(result.message)
-                })
-            } else {
-                this.$message.warning('未选中角色')
-            }
+            const permissionIds = [];
+            this.$refs.permission.getCheckedNodes().forEach(function (data, index) {
+                permissionIds.push(data.id)
+            })
+            this.$authApi.ResetRolePermissions(this.currectRole.id, permissionIds).then((result) => {
+                this.$message.success(result.message)
+                this.permissionDialog = false;
+            })
         },
         remove (row) {
             this.$authApi.DelRole(row.id).then(() => {
@@ -205,9 +188,12 @@ export default {
                 this.search();
             })
         },
-        getRoleMenus (row) {
+        openRoleMenus(row) {
             this.currectRole = row;
-            this.$refs.menu.setCheckedKeys([])
+            this.$refs.menu?.setCheckedKeys([]);
+
+            this.getMenus();
+
             this.$authApi.GetRoleMenuIds(row.id).then((result) => {
                 if (Array.isArray(result.data)) {
                     this.menuIds = result.data;
@@ -216,7 +202,13 @@ export default {
                 }
             })
 
-            this.$refs.permission.setCheckedKeys([])
+            this.menuDialog = true;
+        },
+        openRolePermission (row) {
+            this.currectRole = row;
+            this.$refs.permission?.setCheckedKeys([])
+
+            this.getAllPermissions();
 
             this.$authApi.GetRolePermissionIds(row.id).then((result) => {
                 if (Array.isArray(result.data)) {
@@ -225,6 +217,8 @@ export default {
                     this.permissionIds = [];
                 }
             })
+
+            this.permissionDialog = true;
         },
         sizeChange (value) {
             this.pageSize = value;
