@@ -36,7 +36,7 @@
             </el-table-column>
         </el-table>
         <!--分页组件-->
-        <el-pagination background style="text-align: center; background-color: #fff;padding: 20px;" :current-page.sync="page" :page-size="pageSize" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
+        <el-pagination background style="text-align: center; background-color: #fff;padding: 20px;" :current-page.sync="page" :page-size="size" layout="total, prev, pager, next" :total="total" @size-change="sizeChange" @current-change="pageChange" />
         <el-dialog custom-class="va-dialog-submit" :visible.sync="menuDialog" width="580px" title="分配菜单" :close-on-click-modal="false">
             <div style="height: 250px;overflow: auto;">
                 <el-tree ref="menu" :default-expanded-keys="menuIds" :data="menus" :default-checked-keys="menuIds" :props="defaultProps" check-strictly accordion show-checkbox node-key="id" />
@@ -84,7 +84,7 @@ export default {
             searchKey: '',
             total: 1,
             page: 1,
-            pageSize: 10,
+            size: 10,
             showButton: true,
             menus: [],
             permissions: [],
@@ -114,7 +114,7 @@ export default {
             this.$authApi.GetAllRoles({
                 name: this.searchKey,
                 page: page || 1,
-                pageSize: this.pageSize
+                size: this.size
             }).then((result) => {
                 this.loading = false;
                 this.data = result.data.content;
@@ -221,7 +221,7 @@ export default {
             this.permissionDialog = true;
         },
         sizeChange (value) {
-            this.pageSize = value;
+            this.size = value;
             this.search();
         },
         pageChange (val) {
