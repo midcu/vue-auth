@@ -1,3 +1,5 @@
+import { BuildMenus } from '../built-menus.js'
+
 export default {
     init (request) {
         this.request = request;
@@ -5,11 +7,31 @@ export default {
     request: function () {
 
     },
-    InitProject: function () {
-        return this.request({
-            url: '/init',
-            method: 'get'
-        })
+    InitProject: function (router, store, loader, platformId) {
+        return new Promise((resolve, reject) => {
+            this.request({ url: '/init/' + platformId, method: 'get' }).then(({ menus, user, permissions }) => {
+                // 构建菜单
+                const routerMenus = BuildMenus(menus, loader);
+
+                // 第一个可展示的菜单配置为首页
+                const firstChild = routerMenus.find(i => i.meta.display);
+                if (firstChild) {
+                    router.addRoute({ path: '', redirect: firstChild.path });
+                }
+
+                for (const i of routerMenus) {
+                    router.addRoute(i);
+                }
+
+                store.commit('SET_MENUS', routerMenus || []);
+                store.commit('SET_PERMISSIONS', permissions || []);
+                store.commit('USER_LOGIN', user);
+
+                resolve();
+            }).catch(() => {
+                reject(new Error("请求出错"));
+            })
+        });
     },
     GetRoleMenuIds: function (id) {
         return this.request({
@@ -70,9 +92,10 @@ export default {
             method: 'get'
         })
     },
-    GetMenus: function () {
+    GetMenus: function (params) {
         return this.request({
             url: '/menus/list',
+            params,
             method: 'get'
         })
     },

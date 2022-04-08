@@ -82,8 +82,19 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
-            <el-form-item label="权限标识">
-                <el-input v-model="submitForm.permission" placeholder="权限标识" />
+            <el-form-item label="所属系统" prop="platformId">
+                <el-col :span="11">
+                    <el-form-item prop="platformId" style="margin-bottom: 0px;">
+                        <el-select v-model="submitForm.platformId" placeholder="请选择">
+                            <el-option v-for="platfrom in platforms" :key="platfrom.id" :label="platfrom.name" :value="platfrom.id"> </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :offset="1" :span="12">
+                    <el-form-item label="权限标识" style="margin-bottom: 0px;">
+                        <el-input v-model="submitForm.permission" placeholder="权限标识" />
+                    </el-form-item>
+                </el-col>
             </el-form-item>
             <el-form-item label="菜单描述">
                 <el-input v-model="submitForm.description" type="textarea" :rows="2" placeholder="描述" />
@@ -99,7 +110,7 @@
 <script>
 export default {
     name: 'va-menu-submit',
-    props: ['form', 'menus', 'visible'],
+    props: ['form', 'menus', 'visible', 'platforms'],
     data () {
         return {
             menuType: ['目录', '菜单'],
@@ -118,7 +129,8 @@ export default {
                 sort: 1,
                 permission: '',
                 state: 1,
-                description: ''
+                description: '',
+                platformId: ''
             },
             rules: {
                 title: [
@@ -135,6 +147,9 @@ export default {
                 ],
                 iframeSrc: [
                     { required: true, message: '请输入路径', trigger: 'blur' }
+                ],
+                platformId: [
+                    { required: true, message: '请选择所属系统', trigger: 'blur' }
                 ]
             },
             menulist: []
@@ -210,7 +225,8 @@ export default {
                 sort: 1,
                 permission: '',
                 state: 1,
-                description: ''
+                description: '',
+                platformId: ''
             }
         },
         closeDialog () {

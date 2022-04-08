@@ -21,6 +21,7 @@ const props = {
         routerAnimation: '',
         layoutName: '',
         headerName: '',
+        platformId: '',
         anonymous: false
     },
     getters: {
@@ -38,6 +39,7 @@ const props = {
             state.layoutName = fileConfig.layout.layoutName;
             state.headerName = fileConfig.name.headerName;
             state.anonymous = fileConfig.anonymous;
+            state.platformId = fileConfig.platformId;
         },
         SET_ROUTER_ANIMATION (state, payload) {
             state.routerAnimation = payload
@@ -64,6 +66,9 @@ const props = {
         },
         SET_HTTP_URL (state, payload) {
             state.httpUrl = payload
+        },
+        SET_PLATFORM_ID(state, payload) {
+            state.platformId = payload
         }
     }
 }

@@ -14,24 +14,7 @@ import fileConfig from '../config/config'
 3：权限列表
 */
 function initRouterMenus (router, store, loader, to, from, next) {
-    AuthApi.InitProject().then(({ menus, user, permissions }) => {
-        // 构建菜单
-        const routerMenus = BuildMenus(menus, loader);
-
-        // 第一个可展示的菜单配置为首页
-        const firstChild = routerMenus.find(i => i.meta.display);
-        if (firstChild) {
-            router.addRoute({ path: '', redirect: firstChild.path });
-        }
-
-        for (const i of routerMenus) {
-            router.addRoute(i);
-        }
-
-        store.commit('SET_MENUS', routerMenus || []);
-        store.commit('SET_PERMISSIONS', permissions || []);
-        store.commit('USER_LOGIN', user);
-
+    AuthApi.InitProject(router, store, loader, store.state.props.platformId).then(() => {
         next({ path: to.fullPath })
     }).catch(() => {
         // 获取菜单失败 跳转至登陆页面

@@ -1,4 +1,5 @@
 module.exports = {
+    platformId: 1, // 对应操作系统id
     path: {
         logoUrl: '',
         httpUrl: '',

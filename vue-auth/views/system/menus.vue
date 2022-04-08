@@ -1,6 +1,11 @@
 <template>
     <va-main-content>
         <div class="va-main-content-header">
+            <div>
+                <el-select size="small" v-model="currentPlatfrom" placeholder="请选择">
+                    <el-option v-for="platfrom in platforms" :key="platfrom.id" :label="platfrom.name" :value="platfrom.id"> </el-option>
+                </el-select>
+            </div>
             <div style="flex: 1;" />
             <div>
                 <el-button size="small" type="success" icon="el-icon-refresh" @click="search">刷新</el-button>
@@ -54,7 +59,7 @@
                 </span>
             </div>
         </el-tree>
-        <VaMenuSubmit ref="VaMenuSubmit" :menus="menus" :visible.sync="submitFormDialog" :form="form" @submit="submit" />
+        <VaMenuSubmit ref="VaMenuSubmit" :menus="menus" :platforms="platforms" :visible.sync="submitFormDialog" :form="form" @submit="submit" />
     </va-main-content>
 </template>
 
@@ -85,6 +90,8 @@ export default {
             defNodeExpandId: '',
             submitFormDialog: false,
             loading: true,
+            currentPlatfrom: this.$store.state.props.platformId,
+            platforms: [{ id: 1, name: "后台管理系统" }],
             menuType: ['目录', '菜单', '按钮']
         }
     },
@@ -93,7 +100,7 @@ export default {
     },
     methods: {
         search () {
-            this.$authApi.GetMenus().then((result) => {
+            this.$authApi.GetMenus({ platformId: this.currentPlatfrom }).then((result) => {
                 this.loading = false;
                 this.menus = buildMenuTree(result.data.content);
                 if (this.defNodeExpandId) {

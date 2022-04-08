@@ -46,8 +46,8 @@ export default {
             const heightPercentage = (wrap.clientHeight * 100 / wrap.scrollHeight);
             const widthPercentage = (wrap.clientWidth * 100 / wrap.scrollWidth);
 
-            this.sizeHeight = (heightPercentage < 100) ? (heightPercentage + '%') : '';
-            this.sizeWidth = (widthPercentage < 100) ? (widthPercentage + '%') : '';
+            this.sizeHeight = (heightPercentage <= 99) ? (heightPercentage + '%') : '';
+            this.sizeWidth = (widthPercentage <= 99) ? (widthPercentage + '%') : '';
         },
         thumbPosition: function ({ thumbPositionPercentage, bar }) {
             this.$refs.wrap[bar.scroll] = (thumbPositionPercentage * this.$refs.wrap[bar.scrollSize] / 100);
