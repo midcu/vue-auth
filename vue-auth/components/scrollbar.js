@@ -43,9 +43,8 @@ export default {
         update: function () {
             if (!this.$refs.wrap) return;
             const wrap = this.$refs.wrap;
-            let heightPercentage, widthPercentage;
-            heightPercentage = (wrap.clientHeight * 100 / wrap.scrollHeight);
-            widthPercentage = (wrap.clientWidth * 100 / wrap.scrollWidth);
+            const heightPercentage = (wrap.clientHeight * 100 / wrap.scrollHeight);
+            const widthPercentage = (wrap.clientWidth * 100 / wrap.scrollWidth);
 
             this.sizeHeight = (heightPercentage < 100) ? (heightPercentage + '%') : '';
             this.sizeWidth = (widthPercentage < 100) ? (widthPercentage + '%') : '';
