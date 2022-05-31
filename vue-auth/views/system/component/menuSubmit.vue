@@ -142,9 +142,6 @@ export default {
                 pid: [
                     { required: true, message: '请输入上级目录', trigger: 'blur' }
                 ],
-                layout: [
-                    { required: true, message: '请选择页面结构', trigger: 'blur' }
-                ],
                 iframeSrc: [
                     { required: true, message: '请输入路径', trigger: 'blur' }
                 ],

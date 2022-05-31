@@ -91,3 +91,9 @@ html, body {
     color: #666666;
     height: 300px;
 }
+
+.va-main-content-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
